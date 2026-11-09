@@ -55,3 +55,27 @@ docker run --rm ghcr.io/anitouchq/hello-rust:latest
 - [Docker package в GHCR](https://github.com/users/anitouchq/packages/container/hello-rust)
 
 [Главный каталог CI/CD проектов](https://github.com/anitouchq/CI-CD-Pipelines)
+
+## Скриншоты
+
+Добавьте изображения в каталог `screenshots/` с такими именами:
+
+- `screenshots/application.png` — пример запуска приложения;
+- `screenshots/github-actions.png` — успешный запуск CI и Docker publish;
+- `screenshots/ghcr-package.png` — опубликованный Docker package в GHCR.
+
+![Пример работы приложения](screenshots/application.png)
+![GitHub Actions](screenshots/github-actions.png)
+![Docker package в GHCR](screenshots/ghcr-package.png)
+
+## Как опубликовать новую версию Docker image
+
+В этом проекте GitHub Release с бинарниками не создаётся. Новый Docker image автоматически собирается и публикуется после успешного push в ветку `main`.
+
+```bash
+git add .
+git commit -m "feat: describe your change"
+git push origin main
+```
+
+После успешного workflow образ будет доступен как `ghcr.io/anitouchq/hello-rust:latest`. Проверить результат можно в [GitHub Actions](https://github.com/anitouchq/hello-rust/actions) и [GHCR](https://github.com/users/anitouchq/packages/container/hello-rust).

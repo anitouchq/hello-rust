@@ -1,16 +1,18 @@
-# 🦀 hello-rust — Docker image → GHCR
+# hello-rust
 
-Учебный проект CI/CD для Rust. GitHub Actions проверяет код, запускает тесты и собирает release-версию. После успешных проверок при push в `main` Docker-образ публикуется в GitHub Container Registry.
+[![CI](https://github.com/anitouchq/hello-rust/actions/workflows/ci.yml/badge.svg)](https://github.com/anitouchq/hello-rust/actions)
 
-## Pipeline
+Учебный проект на Rust: GitHub Actions проверяет исходный код, запускает тесты и собирает release-версию. После успешного CI при push в `main` Docker-образ публикуется в GitHub Container Registry (GHCR).
 
-1. `cargo fmt --all -- --check` — проверка форматирования.
-2. `cargo clippy --all-targets --all-features -- -D warnings` — статический анализ.
-3. `cargo test --all-features` — unit- и integration-тесты.
-4. `cargo build --release` — release-сборка.
-5. Docker Buildx собирает контейнер и публикует его в GHCR.
+## Что делает pipeline
 
-Публикация выполняется только после успешного job `test` и только для push в `main`. Pull request запускает проверки, но не публикует образ.
+1. `cargo fmt --all -- --check` — проверяет форматирование.
+2. `cargo clippy --all-targets --all-features -- -D warnings` — запускает статический анализ.
+3. `cargo test --all-features` — выполняет unit- и integration-тесты.
+4. `cargo build --release` — собирает release-версию.
+5. Docker Buildx собирает образ и отправляет его в GHCR.
+
+Pull request запускает проверки, но не публикует контейнер. Публикация выполняется отдельным job только после успешного job `test` на ветке `main`.
 
 ## Локальный запуск
 
@@ -23,38 +25,33 @@ cargo test --all-features
 cargo run
 ```
 
-## Docker
+## Docker image
 
-После первого успешного запуска workflow образ будет доступен по адресу:
+Образ публикуется по адресу `ghcr.io/anitouchq/hello-rust`:
 
 ```bash
 docker pull ghcr.io/anitouchq/hello-rust:latest
 docker run --rm ghcr.io/anitouchq/hello-rust:latest
 ```
 
-Пакет можно сделать публичным в GitHub → Packages → Package settings.
+[Открыть пакет в GHCR](https://github.com/users/anitouchq/packages/container/hello-rust)
 
+## Структура проекта
 
-## GHCR access troubleshooting
+| Файл или каталог | Назначение |
+|---|---|
+| `.github/workflows/ci.yml` | Проверки Rust и публикация Docker-образа |
+| `src/main.rs` | Точка входа приложения |
+| `src/lib.rs` | Основная логика, доступная приложению и тестам |
+| `tests/integration.rs` | Интеграционные тесты |
+| `Cargo.toml` | Метаданные пакета и зависимости Rust |
+| `Dockerfile` | Сборка контейнерного образа |
+| `.dockerignore` | Исключения из Docker build context |
+| `.gitignore` | Локальные файлы, которые не попадают в Git |
 
-Если публикация завершается ошибкой `permission_denied: write_package`, откройте GitHub Profile → Packages → нужный пакет → **Package settings → Manage Actions access → Add repository**. Добавьте `hello-rust` и установите роль **Write**. Затем повторно запустите неуспешный workflow во вкладке Actions.
+## Результаты
 
-## Permissions
-
-Workflow использует `contents: read` для checkout и `packages: write` для публикации контейнера через встроенный `GITHUB_TOKEN`. Внешние секреты не требуются.
-
-## Структура
-
-```text
-.
-├── .github/workflows/ci.yml
-├── src/
-│   ├── lib.rs
-│   └── main.rs
-├── tests/integration.rs
-├── Cargo.toml
-├── Dockerfile
-└── README.md
-```
+- [Последние запуски GitHub Actions](https://github.com/anitouchq/hello-rust/actions)
+- [Docker package в GHCR](https://github.com/users/anitouchq/packages/container/hello-rust)
 
 [Главный каталог CI/CD проектов](https://github.com/anitouchq/CI-CD-Pipelines)

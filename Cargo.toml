@@ -1,0 +1,7 @@
+[package]
+name = "hello-rust"
+version = "1.0.0"
+edition = "2021"
+description = "Rust demo app published as a Docker image to GHCR"
+
+[dependencies]

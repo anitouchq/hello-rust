@@ -34,6 +34,11 @@ docker run --rm ghcr.io/anitouchq/hello-rust:latest
 
 Пакет можно сделать публичным в GitHub → Packages → Package settings.
 
+
+## GHCR access troubleshooting
+
+Если публикация завершается ошибкой `permission_denied: write_package`, откройте GitHub Profile → Packages → нужный пакет → **Package settings → Manage Actions access → Add repository**. Добавьте `hello-rust` и установите роль **Write**. Затем повторно запустите неуспешный workflow во вкладке Actions.
+
 ## Permissions
 
 Workflow использует `contents: read` для checkout и `packages: write` для публикации контейнера через встроенный `GITHUB_TOKEN`. Внешние секреты не требуются.

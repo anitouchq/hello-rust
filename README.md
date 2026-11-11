@@ -55,17 +55,11 @@ docker run --rm ghcr.io/anitouchq/hello-rust:latest
 - [Docker package в GHCR](https://github.com/users/anitouchq/packages/container/hello-rust)
 
 
-## Скриншоты
+### Workflow в Actions
 
-### Пример запуска приложения
+![Workflow в GitHub Actions](screenshots/github-actions.png)
 
-![Пример запуска приложения](screenshots/application.png)
-
-### Успешный CI и публикация Docker-образа
-
-![Успешный CI и публикация Docker-образа](screenshots/github-actions.png)
-
-### Опубликованный Docker package в GHCR
+### Пакет в GHCR
 
 ![Опубликованный Docker package в GHCR](screenshots/ghcr-package.png)
 
